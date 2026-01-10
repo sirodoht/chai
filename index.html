@@ -2,504 +2,594 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Masala Chai with Plant Milk</title>
     <style>
+        :root {
+            --bg: #f6f6ef;
+            --text: #222;
+            --border: #c7c7c7;
+            --card: #ffffff;
+            --max: 540px;
+        }
+
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #0a0a0a;
-            color: #f5f5f5;
-            padding: 0;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 620px;
-            margin: 0 auto;
-            padding: 80px 40px;
-            box-sizing: border-box;
-        }
-        @media (max-width: 768px) {
-            .container {
-                padding: 60px 32px;
-            }
-        }
-        @media (max-width: 480px) {
-            .container {
-                padding: 40px 24px;
-            }
-        }
-
-        .recipe-header {
-            text-align: left;
-            margin-bottom: 80px;
-            border-left: 4px solid #ff6b35;
-            padding-left: 32px;
-            box-sizing: border-box;
-        }
-        @media (max-width: 768px) {
-            .recipe-header {
-                margin-bottom: 60px;
-                padding-left: 24px;
-            }
-        }
-        @media (max-width: 480px) {
-            .recipe-header {
-                margin-bottom: 50px;
-                padding-left: 20px;
-                border-left-width: 3px;
-            }
-        }
-
-        .main-title {
-            font-size: 4.5rem;
-            font-weight: 800;
-            color: #ffffff;
-            margin-bottom: 16px;
-            letter-spacing: -2px;
-            line-height: 1;
-        }
-        @media (max-width: 768px) {
-            .main-title {
-                font-size: 3rem;
-                letter-spacing: -1px;
-            }
-        }
-        @media (max-width: 480px) {
-            .main-title {
-                font-size: 2.5rem;
-            }
-        }
-
-        .banner {
-            display: inline-block;
-            background: #ff6b35;
-            color: #0a0a0a;
-            padding: 6px 16px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            margin-top: 8px;
-            text-transform: uppercase;
-            box-sizing: border-box;
-        }
-        @media (max-width: 768px) {
-            .banner {
-                font-size: 0.7rem;
-                padding: 5px 12px;
-            }
-        }
-
-        .cup-selector-container {
-            margin-top: 32px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        @media (max-width: 768px) {
-            .cup-selector-container {
-                margin-top: 24px;
-                gap: 12px;
-            }
-        }
-        @media (max-width: 480px) {
-            .cup-selector-container {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-            }
-        }
-
-        .cup-label {
-            font-size: 0.95rem;
-            color: #a0a0a0;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .cup-controls {
-            display: flex;
-            align-items: center;
-            gap: 0;
-            background: #1a1a1a;
-            border: 2px solid #2a2a2a;
-            border-radius: 8px;
-            overflow: hidden;
-            box-sizing: border-box;
-        }
-        @media (max-width: 480px) {
-            .cup-controls {
-                width: 100%;
-                max-width: 200px;
-            }
-        }
-
-        .cup-btn {
-            background: #2a2a2a;
-            color: #ff6b35;
-            border: none;
-            width: 40px;
-            height: 40px;
-            font-size: 1.5rem;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-            user-select: none;
-            box-sizing: border-box;
-        }
-        @media (max-width: 768px) {
-            .cup-btn {
-                width: 36px;
-                height: 36px;
-                font-size: 1.3rem;
-            }
-        }
-
-        .cup-btn:hover {
-            background: #333;
-            color: #ff8c5a;
-        }
-
-        .cup-btn:active {
-            background: #1a1a1a;
-            transform: scale(0.95);
-        }
-
-        .cup-input {
-            background: transparent;
-            border: none;
-            color: #ffffff;
-            font-size: 1.1rem;
-            font-weight: 600;
-            width: 60px;
-            height: 40px;
-            text-align: center;
-            font-family: inherit;
-            appearance: textfield;
-            -moz-appearance: textfield;
-            box-sizing: border-box;
-        }
-        @media (max-width: 768px) {
-            .cup-input {
-                width: 50px;
-                height: 36px;
-                font-size: 1rem;
-            }
-        }
-
-        .cup-input::-webkit-outer-spin-button,
-        .cup-input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
             margin: 0;
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.4;
+        }
+        @media (max-width: 640px) {
+            body {
+                font-size: 13px;
+            }
         }
 
-        .cup-input:focus {
-            outline: none;
-            background: #222;
+        .wrap {
+            max-width: var(--max);
+            margin: 0 auto;
+            padding: 0 10px 40px;
         }
 
-        .recipe-steps {
+        header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            gap: 10px;
+            margin: 0 0 12px;
+            padding: 12px 0 10px;
+            background: transparent;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        @media (max-width: 640px) {
+            h1 {
+                font-size: 17px;
+            }
+        }
+
+        main {
             display: flex;
             flex-direction: column;
-            gap: 32px;
+            gap: 14px;
+            align-items: stretch;
         }
-        @media (max-width: 768px) {
-            .recipe-steps {
-                gap: 40px;
-            }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 0;
+            box-shadow: none;
+            overflow: hidden;
         }
-        @media (max-width: 480px) {
-            .recipe-steps {
-                gap: 36px;
-            }
+
+        .media {
+            position: relative;
+            background: #fff;
+        }
+
+        .media .caption {
+            position: static;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 6px 8px;
+            background: #f0f0f0;
+        }
+        .media .caption.ingredients {
+            background: #f0f0ff;
+        }
+        .media .caption.scaling {
+            background: #fff0f0;
+        }
+        .media .caption.steps {
+            background: #f0fff0;
+        }
+
+        .caption .meta {
+            display: flex;
+            flex-direction: column;
+            gap: 0
+        }
+
+        .content {
+            padding: 10px;
+        }
+
+        ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        li {
+            margin: 4px 0
+        }
+
+        ul ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+
+        ul ul li::before {
+            content: "+";
+            font-weight: bold;
+            margin-right: 6px;
+            color: var(--text);
+        }
+
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .step-icon {
+            display: flex;
         }
 
         .step {
             display: grid;
-            grid-template-columns: 60px 1fr;
-            gap: 32px;
+            grid-template-columns: 26px 1fr;
+            gap: 8px;
             align-items: start;
-            padding: 0;
-            position: relative;
+            padding: 6px;
+            border: 1px solid var(--border);
+            background: #fafafa;
         }
-        @media (max-width: 768px) {
-            .step {
-                grid-template-columns: 50px 1fr;
-                gap: 24px;
-            }
+        .step.has-timer {
+            grid-template-columns: 26px 1fr auto;
         }
-        @media (max-width: 480px) {
-            .step {
-                grid-template-columns: 45px 1fr;
-                gap: 20px;
+
+        .num {
+            width: 24px;
+            height: 24px;
+            border: 1px solid #ececec;
+            background: #fff;
+            display: grid;
+            place-items: center;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .step .small {
+            color: var(--text);
+            font-size: 12px
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 8px 10px;
+            border-top: 1px solid var(--border);
+            background: #f9f9f9;
+        }
+        @media (max-width: 640px) {
+            .controls {
+                gap: 12px;
             }
         }
 
-        .step::after {
-            content: '';
-            position: absolute;
-            left: 30px;
-            top: 60px;
-            bottom: -32px;
-            width: 2px;
-            background: #1a1a1a;
+        .control-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+            width: 100%;
         }
-        @media (max-width: 768px) {
-            .step::after {
-                left: 25px;
-                top: 50px;
+        @media (max-width: 640px) {
+            .control-row {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 6px;
             }
-        }
-        @media (max-width: 480px) {
-            .step::after {
-                left: 22.5px;
-                top: 45px;
-            }
-        }
-        .step:last-child::after {
-            display: none;
         }
 
-        .step-number {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #ff6b35;
-            width: 60px;
-            height: 60px;
+        .range-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+        @media (max-width: 640px) {
+            .range-controls {
+                width: 100%;
+            }
+        }
+
+        .step-btn {
+            width: 42px;
+            height: 24px;
+            border-radius: 2px;
+            border: 1px solid #c4c4c4;
+            background: #f0f0f0;
+            font-size: 16px;
+            font-weight: bold;
+            color: #000;
+            cursor: pointer;
+            font-family: Verdana, Arial, Helvetica, sans-serif;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #1a1a1a;
-            border-radius: 50%;
-            border: 2px solid #2a2a2a;
-            position: relative;
-            z-index: 1;
-            align-self: start;
-            margin-top: calc((1.125rem * 1.5) / 2 - 30px);
-            box-sizing: border-box;
+            transition: background 0.1s ease;
         }
-        @media (max-width: 768px) {
-            .step-number {
-                width: 50px;
-                height: 50px;
-                font-size: 1.25rem;
-            }
+        .step-btn:hover {
+            background: #e0e0e0;
+            border-color: #666;
         }
-        @media (max-width: 480px) {
-            .step-number {
-                width: 45px;
-                height: 45px;
-                font-size: 1.1rem;
+        .step-btn:active {
+            background: #d0d0d0;
+            border-color: #333;
+        }
+        @media (max-width: 640px) {
+            .step-btn {
+                flex: 0 0 48px;
+                height: 32px;
+                font-size: 18px;
             }
         }
 
-        .step-content {
-            padding-top: 0;
+        .badge {
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: #fff;
+            color: #333;
+            white-space: nowrap;
+        }
+        @media (max-width: 640px) {
+            .badge {
+                font-size: 12px;
+                padding: 4px 10px;
+            }
+        }
+        .badge.solid {
+            background: #eef4ff;
+            border-color: #9cb5ed;
+            font-weight: bold;
+        }
+
+        .timer-container {
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            flex-direction: row;
             justify-content: flex-start;
+            padding-left: 8px;
         }
-        .step-content .step-text {
-            margin-top: 0;
-            margin-bottom: 0;
-        }
-        .step-content .step-ingredients {
-            margin-top: 0;
-        }
-
-        .step-text {
-            font-size: 1.125rem;
-            line-height: 1.8;
-            color: #e0e0e0;
-            font-weight: 400;
-        }
-        @media (max-width: 768px) {
-            .step-text {
-                font-size: 1rem;
-            }
-        }
-        @media (max-width: 480px) {
-            .step-text {
-                font-size: 0.95rem;
+        @media (max-width: 640px) {
+            .timer-container {
+                align-self: center;
+                padding-right: 2px;
             }
         }
 
-        .step-ingredients {
-            list-style: none;
-            margin-top: 12px;
-            padding-left: 0;
+        .timer-display {
+            font-size: 12px;
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            color: var(--text);
         }
 
-        .step-ingredients li {
-            font-size: 1.125rem;
-            line-height: 1.5;
-            color: #e0e0e0;
-            font-weight: 400;
-            padding-left: 24px;
-            position: relative;
-            margin-bottom: 4px;
+        .timer-btn {
+            width: 42px;
+            height: 24px;
+            border-radius: 2px;
+            border: 1px solid #c4c4c4;
+            background: #f0f0f0;
+            font-size: 11px;
+            font-weight: bold;
+            color: #000;
+            cursor: pointer;
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.1s ease;
+            padding: 0;
         }
-        .step-ingredients li::before {
-            content: '•';
-            position: absolute;
-            left: 8px;
-            color: #ff6b35;
-            font-weight: 700;
+        .timer-btn:hover {
+            background: #e0e0e0;
+            border-color: #666;
+        }
+        .timer-btn:active {
+            background: #d0d0d0;
+            border-color: #333;
+        }
+        .timer-btn.running {
+            background: #fff0f0;
+            border-color: #e57373;
+        }
+        .timer-btn.complete {
+            background: #f0fff0;
+            border-color: #81c784;
+        }
+        @media (max-width: 640px) {
+            .timer-btn {
+                width: 48px;
+                height: 42px;
+                font-size: 12px;
+            }
         }
     </style>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const cupSelector = document.getElementById('cup-selector');
-            const cupDecrease = document.getElementById('cup-decrease');
-            const cupIncrease = document.getElementById('cup-increase');
-            const quantitySpans = document.querySelectorAll('[data-base]');
+        document.addEventListener('DOMContentLoaded', function () {
+            // === Base recipe (2 cups) from the image ===
+            // 500 ml water + fresh ginger slices + 3 heaped tsp chai
+            // Add 3 tsp sugar; simmer 5 min
+            // Add 250 ml plant milk
 
-            // Base recipe is for 2 cups
-            const BASE_CUPS = 2;
+            const $ = (sel) => document.querySelector(sel);
 
-            function calculateQuantity(base, increment, cups) {
-                if (cups <= BASE_CUPS) {
-                    return base;
-                }
-                const extraCups = cups - BASE_CUPS;
-                return base + (extraCups * increment);
+            const cupsInput = $("#cups");
+            const cupsBadge = $("#cupsBadge");
+            const stepButtons = document.querySelectorAll("[data-step]");
+            const ingredientsList = $("#ingredients");
+            const waterMlEl = $(".water-ml");
+            const chaiTspEl = $(".chai-tsp");
+            const sugarTspEl = $(".sugar-tsp");
+            const milkMlEl = $(".milk-ml");
+            function formatTime(seconds) {
+                const mins = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+                return `${mins}:${secs.toString().padStart(2, '0')}`;
             }
 
-            function updateQuantities(cups) {
-                quantitySpans.forEach(span => {
-                    const base = parseFloat(span.getAttribute('data-base'));
-                    const increment = parseFloat(span.getAttribute('data-increment'));
-                    const unit = span.getAttribute('data-unit');
-                    const suffix = span.getAttribute('data-suffix') || '';
+            function createTimer(displayEl, btnEl, durationMinutes, initialDisplay) {
+                let timerInterval = null;
+                let timerEndTime = null;
 
-                    const quantity = calculateQuantity(base, increment, cups);
+                function updateTimerDisplay() {
+                    if (!timerEndTime) {
+                        displayEl.textContent = initialDisplay;
+                        return;
+                    }
+                    const now = Date.now();
+                    const remaining = Math.max(0, Math.ceil((timerEndTime - now) / 1000));
+                    displayEl.textContent = formatTime(remaining);
 
-                    // Format the quantity (remove decimals if whole number)
-                    const formattedQuantity = quantity % 1 === 0 ? quantity : quantity.toFixed(1);
+                    if (remaining === 0) {
+                        clearInterval(timerInterval);
+                        timerInterval = null;
+                        timerEndTime = null;
+                        btnEl.textContent = "✓";
+                        btnEl.setAttribute("aria-label", "Timer complete");
+                        btnEl.className = "timer-btn complete";
+                        displayEl.textContent = "Done";
+                    }
+                }
 
-                    span.textContent = formattedQuantity + unit + suffix;
+                btnEl.addEventListener("click", () => {
+                    if (timerInterval) {
+                        // Stop timer
+                        clearInterval(timerInterval);
+                        timerInterval = null;
+                        timerEndTime = null;
+                        btnEl.textContent = "▶";
+                        btnEl.setAttribute("aria-label", "Start timer");
+                        btnEl.className = "timer-btn";
+                        displayEl.textContent = initialDisplay;
+                    } else {
+                        // Start timer
+                        timerEndTime = Date.now() + durationMinutes * 60 * 1000;
+                        btnEl.textContent = "⏸";
+                        btnEl.setAttribute("aria-label", "Stop timer");
+                        btnEl.className = "timer-btn running";
+                        updateTimerDisplay();
+                        timerInterval = setInterval(updateTimerDisplay, 100);
+                    }
                 });
             }
 
-            function updateCups(value) {
-                const cups = Math.max(2, Math.min(20, parseInt(value) || 2));
-                cupSelector.value = cups;
-                updateQuantities(cups);
+            createTimer($("#timerDisplay"), $("#timerBtn"), 10, "10:00");
+            createTimer($("#timerDisplay3"), $("#timerBtn3"), 5, "5:00");
+
+            function calc(cups) {
+                // Scale per infographic rules: base = 2 cups.
+                const extra = Math.max(0, cups - 2);
+                const waterMl = 500 + extra * 200;
+                const chaiTsp = 3 + extra * 1;
+                const sugarTsp = 3 + extra * 1;
+                const milkMl = 250 + extra * 100;
+                return { cups, waterMl, chaiTsp, sugarTsp, milkMl };
             }
 
-            cupDecrease.addEventListener('click', () => {
-                const current = parseInt(cupSelector.value) || 2;
-                updateCups(current - 1);
+            function render() {
+                const cups = Number(cupsInput.value);
+                const r = calc(cups);
+                cupsBadge.textContent = `Cups: ${r.cups}`;
+
+                const ing = [
+                    `<b>${r.waterMl} ml</b> water`,
+                    `<b>${r.milkMl} ml</b> plant milk`,
+                    `<b>${r.chaiTsp}</b> heaped tsp masala chai`,
+                    `<b>${r.sugarTsp}</b> tsp sugar`,
+                    `Fresh ginger slices (to taste)`,
+                ];
+
+                ingredientsList.innerHTML = ing.map(x => `<li>${x}</li>`).join("");
+
+                // Update dynamic values in steps
+                waterMlEl.textContent = `${r.waterMl} ml`;
+                chaiTspEl.textContent = r.chaiTsp;
+                sugarTspEl.textContent = r.sugarTsp;
+                milkMlEl.textContent = `${r.milkMl} ml`;
+            }
+
+            stepButtons.forEach(btn => {
+                btn.addEventListener("click", () => {
+                    const step = Number(btn.dataset.step || 0);
+                    const min = Number(cupsInput.min);
+                    const max = Number(cupsInput.max);
+                    const next = Math.min(max, Math.max(min, Number(cupsInput.value) + step));
+                    cupsInput.value = next;
+                    render();
+                });
             });
 
-            cupIncrease.addEventListener('click', () => {
-                const current = parseInt(cupSelector.value) || 2;
-                updateCups(current + 1);
-            });
-
-            cupSelector.addEventListener('input', (e) => {
-                updateCups(e.target.value);
-            });
-
-            cupSelector.addEventListener('blur', (e) => {
-                const value = parseInt(e.target.value);
-                if (isNaN(value) || value < 2) {
-                    updateCups(2);
-                }
-            });
-
-            // Initialize with default 2 cups
-            updateQuantities(2);
+            render();
         });
     </script>
 </head>
+
 <body>
-    <div class="container">
-        <header class="recipe-header">
-            <h1 class="main-title">MASALA CHAI</h1>
-            <div class="banner">with PLANT MILK</div>
-            <div class="cup-selector-container">
-                <label for="cup-selector" class="cup-label">Cups:</label>
-                <div class="cup-controls">
-                    <button class="cup-btn" id="cup-decrease" aria-label="Decrease cups">−</button>
-                    <input type="number" id="cup-selector" class="cup-input" value="2" min="2" max="20" aria-label="Number of cups">
-                    <button class="cup-btn" id="cup-increase" aria-label="Increase cups">+</button>
-                </div>
-            </div>
+    <div class="wrap">
+        <header>
+            <h1>Masala Chai with Plant Milk</h1>
         </header>
 
-        <main class="recipe-content">
-            <div class="recipe-steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <p class="step-text">
-                            Combine in a pot:
-                        </p>
-                        <ul class="step-ingredients">
-                            <li><span data-base="500" data-increment="200" data-unit="ml" data-suffix=" water">500ml water</span></li>
-                            <li>Slices of fresh ginger</li>
-                            <li><span data-base="3" data-increment="1" data-unit=" heaped tsp chai">3 heaped tsp chai</span></li>
-                        </ul>
+        <main>
+            <section class="card">
+                <div class="media">
+                    <div class="caption">
+                        <div class="meta">
+                            Choose number of cups to make
+                        </div>
                     </div>
                 </div>
+                <div class="controls">
+                    <div class="control-row">
+                        <div class="range-controls">
+                            <button class="step-btn" type="button" data-step="-1" aria-label="Decrease cups">-</button>
+                            <input id="cups" type="hidden" min="2" max="20" step="1" value="2" />
+                            <span class="badge solid" id="cupsBadge" aria-live="polite">Cups: 2</span>
+                            <button class="step-btn" type="button" data-step="1" aria-label="Increase cups">+</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <ul class="step-ingredients">
-                            <li>Bring to a boil</li>
-                            <li>Then let simmer vigorously for 10 min</li>
-                        </ul>
+            <section class="card">
+                <div class="media">
+                    <div class="caption ingredients">
+                        <div class="meta">
+                            Ingredients
+                        </div>
                     </div>
                 </div>
+                <div class="content">
+                    <ul id="ingredients"></ul>
+                </div>
+            </section>
 
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <div class="step-content">
-                        <ul class="step-ingredients">
-                            <li>Add <span data-base="3" data-increment="1" data-unit=" tsp granulated white sugar">3 tsp granulated white sugar</span></li>
-                            <li>Continue simmering for 5 more minutes</li>
-                            <li>Stir occasionally</li>
-                        </ul>
+            <section class="card">
+                <div class="media">
+                    <div class="caption scaling">
+                        <div class="meta">
+                            Scaling rules
+                        </div>
                     </div>
                 </div>
+                <div class="content">
+                    <ul>
+                        <li>Base recipe = <b>2 cups</b></li>
+                        <li>Each extra cup:
+                            <ul>
+                                <li><b>200 ml water</b></li>
+                                <li><b>1 tsp chai</b></li>
+                                <li><b>1 tsp sugar</b></li>
+                                <li><b>100 ml plant milk</b></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </section>
 
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <div class="step-content">
-                        <ul class="step-ingredients">
-                            <li>Reduce heat to low</li>
-                            <li>Add <span data-base="250" data-increment="100" data-unit="ml plant milk">250ml plant milk</span></li>
-                        </ul>
+            <section class="card">
+                <div class="media">
+                    <div class="caption steps">
+                        <div class="meta">
+                            Steps
+                        </div>
                     </div>
                 </div>
-
-                <div class="step">
-                    <div class="step-number">5</div>
-                    <div class="step-content">
-                        <ul class="step-ingredients">
-                            <li>Stir gently until the mixture is warm</li>
-                            <li>Do not boil</li>
-                        </ul>
+                <div class="content">
+                    <div class="steps" id="steps">
+                        <div class="step">
+                            <div class="step-icon">
+                                <div class="num" aria-hidden="true">1</div>
+                            </div>
+                            <div class="step-content">
+                                <ul class="small">
+                                    <li>Add <b class="water-ml">500 ml</b> water to a pot</li>
+                                    <li>With <b class="chai-tsp">3</b> heaped tsp masala chai</li>
+                                    <li>And fresh ginger slices</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="step has-timer">
+                            <div class="step-icon">
+                                <div class="num" aria-hidden="true">2</div>
+                            </div>
+                            <div class="step-content">
+                                <ul class="small">
+                                    <li>Bring to a boil</li>
+                                    <li>Simmer for <b>10 min</b></li>
+                                </ul>
+                            </div>
+                            <div class="timer-container">
+                                <span class="timer-display" id="timerDisplay">10:00</span>
+                                <button class="timer-btn" id="timerBtn" type="button" aria-label="Start timer">▶</button>
+                            </div>
+                        </div>
+                        <div class="step has-timer">
+                            <div class="step-icon">
+                                <div class="num" aria-hidden="true">3</div>
+                            </div>
+                            <div class="step-content">
+                                <ul class="small">
+                                    <li>Add <b class="sugar-tsp">3</b> tsp sugar</li>
+                                    <li>Simmer for <b>5 min</b></li>
+                                </ul>
+                            </div>
+                            <div class="timer-container">
+                                <span class="timer-display" id="timerDisplay3">5:00</span>
+                                <button class="timer-btn" id="timerBtn3" type="button" aria-label="Start timer">▶</button>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-icon">
+                                <div class="num" aria-hidden="true">4</div>
+                            </div>
+                            <div class="step-content">
+                                <ul class="small">
+                                    <li>Add <b class="milk-ml">250 ml</b> plant milk</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-icon">
+                                <div class="num" aria-hidden="true">5</div>
+                            </div>
+                            <div class="step-content">
+                                <ul class="small">
+                                    <li>Stir until warm</li>
+                                    <li>Do not boil</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-icon">
+                                <div class="num" aria-hidden="true">6</div>
+                            </div>
+                            <div class="step-content">
+                                <ul class="small">
+                                    <li>Strain through a mesh strainer</li>
+                                    <li>Discard solids</li>
+                                    <li>Serve</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <div class="step">
-                    <div class="step-number">6</div>
-                    <div class="step-content">
-                        <ul class="step-ingredients">
-                            <li>Strain through a fine mesh sieve</li>
-                            <li>Discard the solids</li>
-                            <li>Serve immediately</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            </section>
         </main>
     </div>
 </body>
