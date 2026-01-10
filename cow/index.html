@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Masala Chai with Plant Milk</title>
+    <title>Masala Chai with Cow Milk</title>
     <style>
         :root {
             --bg: #f6f6ef;
@@ -341,10 +341,13 @@
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Base recipe (2 cups)
+            // === Base recipe (2 cups) ===
             // 500 ml water + fresh ginger slices + 3 heaped tsp chai
-            // Add 3 tsp sugar; simmer 5 min
-            // Add 250 ml plant milk
+            // Bring to boil, simmer 10 min
+            // Add 3 tsp sugar + 500 ml cow milk, bring back to boil
+            // Simmer 10 min (2 cups) or until reduced by half (more than 2 cups)
+            // Remove from heat, let sit 5 min
+            // Strain and serve
 
             const $ = (sel) => document.querySelector(sel);
 
@@ -409,15 +412,16 @@
             }
 
             createTimer($("#timerDisplay"), $("#timerBtn"), 10, "10:00");
-            createTimer($("#timerDisplay3"), $("#timerBtn3"), 5, "5:00");
+            createTimer($("#timerDisplay4"), $("#timerBtn4"), 10, "10:00");
+            createTimer($("#timerDisplay5"), $("#timerBtn5"), 5, "5:00");
 
             function calc(cups) {
-                // Scale per infographic rules: base = 2 cups.
+                // Scale per recipe: base = 2 cups.
                 const extra = Math.max(0, cups - 2);
                 const waterMl = 500 + extra * 200;
                 const chaiTsp = 3 + extra * 1;
                 const sugarTsp = 3 + extra * 1;
-                const milkMl = 250 + extra * 100;
+                const milkMl = 500 + extra * 200;
                 return { cups, waterMl, chaiTsp, sugarTsp, milkMl };
             }
 
@@ -428,7 +432,7 @@
 
                 const ing = [
                     `<b>${r.waterMl} ml</b> water`,
-                    `<b>${r.milkMl} ml</b> plant milk`,
+                    `<b>${r.milkMl} ml</b> cow milk`,
                     `<b>${r.chaiTsp}</b> heaped tsp masala chai`,
                     `<b>${r.sugarTsp}</b> tsp granulated white sugar`,
                     `Fresh ginger slices (to taste)`,
@@ -462,8 +466,8 @@
 <body>
     <div class="wrap">
         <header>
-            <h1>Masala Chai with Plant Milk</h1>
-            <a href="cow/" class="nav-link">View cow milk version</a>
+            <h1>Masala Chai with Cow Milk</h1>
+            <a href="../" class="nav-link">View plant milk version</a>
         </header>
 
         <main>
@@ -516,7 +520,7 @@
                                 <li><b>200 ml water</b></li>
                                 <li><b>1 tsp chai</b></li>
                                 <li><b>1 tsp sugar</b></li>
-                                <li><b>100 ml plant milk</b></li>
+                                <li><b>200 ml cow milk</b></li>
                             </ul>
                         </li>
                     </ul>
@@ -552,7 +556,7 @@
                             <div class="step-content">
                                 <ul class="small">
                                     <li>Bring to a boil</li>
-                                    <li>Simmer for <b>10 min</b></li>
+                                    <li>Let simmer rigorously for <b>10 min</b></li>
                                 </ul>
                             </div>
                             <div class="timer-container">
@@ -560,40 +564,46 @@
                                 <button class="timer-btn" id="timerBtn" type="button" aria-label="Start timer">▶</button>
                             </div>
                         </div>
-                        <div class="step has-timer">
+                        <div class="step">
                             <div class="step-icon">
                                 <div class="num" aria-hidden="true">3</div>
                             </div>
                             <div class="step-content">
                                 <ul class="small">
-                                    <li>Add <b class="sugar-tsp">3</b> tsp sugar</li>
-                                    <li>Simmer for <b>5 min</b></li>
+                                    <li>Add <b class="sugar-tsp">3</b> tsp granulated white sugar</li>
+                                    <li>Add <b class="milk-ml">500 ml</b> cow milk</li>
+                                    <li>Bring back to a boil</li>
                                 </ul>
                             </div>
-                            <div class="timer-container">
-                                <span class="timer-display" id="timerDisplay3">5:00</span>
-                                <button class="timer-btn" id="timerBtn3" type="button" aria-label="Start timer">▶</button>
-                            </div>
                         </div>
-                        <div class="step">
+                        <div class="step has-timer">
                             <div class="step-icon">
                                 <div class="num" aria-hidden="true">4</div>
                             </div>
                             <div class="step-content">
                                 <ul class="small">
-                                    <li>Add <b class="milk-ml">250 ml</b> plant milk</li>
+                                    <li>Simmer for <b>10 min</b> (if 2 cups)</li>
+                                    <li>Or until reduced by half (if more than 2 cups)</li>
                                 </ul>
                             </div>
+                            <div class="timer-container">
+                                <span class="timer-display" id="timerDisplay4">10:00</span>
+                                <button class="timer-btn" id="timerBtn4" type="button" aria-label="Start timer">▶</button>
+                            </div>
                         </div>
-                        <div class="step">
+                        <div class="step has-timer">
                             <div class="step-icon">
                                 <div class="num" aria-hidden="true">5</div>
                             </div>
                             <div class="step-content">
                                 <ul class="small">
-                                    <li>Stir until warm</li>
-                                    <li>Do not boil</li>
+                                    <li>Remove from heat</li>
+                                    <li>Let sit for <b>5 min</b></li>
                                 </ul>
+                            </div>
+                            <div class="timer-container">
+                                <span class="timer-display" id="timerDisplay5">5:00</span>
+                                <button class="timer-btn" id="timerBtn5" type="button" aria-label="Start timer">▶</button>
                             </div>
                         </div>
                         <div class="step">
@@ -602,7 +612,7 @@
                             </div>
                             <div class="step-content">
                                 <ul class="small">
-                                    <li>Strain through a mesh strainer</li>
+                                    <li>Strain through mesh</li>
                                     <li>Discard solids</li>
                                     <li>Serve</li>
                                 </ul>
