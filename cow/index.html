@@ -44,7 +44,7 @@
             }
         }
 
-        .wrap {
+        .page-container {
             max-width: var(--max);
             margin: 0 auto;
             padding: 0 10px 40px;
@@ -107,7 +107,7 @@
             align-items: stretch;
         }
 
-        .card {
+        .recipe-card {
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 0;
@@ -130,29 +130,29 @@
         details summary::marker {
             display: none;
         }
-        details summary .caption {
+        details summary .section-title {
             display: flex;
             align-items: center;
             gap: 6px;
             padding: 6px 8px;
             background: #fff0f0;
         }
-        details summary .caption::before {
+        details summary .section-title::before {
             content: "▶";
             font-size: 10px;
             opacity: 0.6;
             flex-shrink: 0;
         }
-        details[open] summary .caption::before {
+        details[open] summary .section-title::before {
             transform: rotate(90deg);
         }
 
-        .media {
+        .card-header {
             position: relative;
             background: #fff;
         }
 
-        .media .caption {
+        .card-header .section-title {
             position: static;
             display: flex;
             justify-content: space-between;
@@ -160,23 +160,23 @@
             padding: 6px 8px;
             background: #f0f0f0;
         }
-        .media .caption.ingredients {
+        .card-header .section-title.ingredients {
             background: #f0f0ff;
         }
-        .media .caption.scaling {
+        .card-header .section-title.scaling {
             background: #fff0f0;
         }
-        .media .caption.steps {
+        .card-header .section-title.steps {
             background: #f0fff0;
         }
 
-        .caption .meta {
+        .section-title .title-text {
             display: flex;
             flex-direction: column;
-            gap: 0
+            gap: 0;
         }
 
-        .content {
+        .card-content {
             padding: 10px;
         }
 
@@ -200,7 +200,7 @@
         }
 
         li {
-            margin: 4px 0
+            margin: 4px 0;
         }
 
         ul ul {
@@ -215,17 +215,17 @@
             color: var(--text);
         }
 
-        .steps {
+        .steps-list {
             display: flex;
             flex-direction: column;
             gap: 6px;
         }
 
-        .step-icon {
+        .step-number-wrapper {
             display: flex;
         }
 
-        .step {
+        .recipe-step {
             display: grid;
             grid-template-columns: 26px 1fr;
             gap: 8px;
@@ -234,11 +234,11 @@
             border: 1px solid var(--border);
             background: #fafafa;
         }
-        .step.has-timer {
+        .recipe-step.has-timer {
             grid-template-columns: 26px 1fr auto;
         }
 
-        .num {
+        .step-number {
             width: 24px;
             height: 24px;
             border: 1px solid #ececec;
@@ -249,12 +249,12 @@
             color: #000;
         }
 
-        .step .small {
+        .recipe-step .step-text {
             color: var(--text);
-            font-size: 12px
+            font-size: 12px;
         }
 
-        .controls {
+        .control-panel {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
@@ -263,12 +263,12 @@
             background: #f9f9f9;
         }
         @media (max-width: 640px) {
-            .controls {
+            .control-panel {
                 gap: 12px;
             }
         }
 
-        .control-row {
+        .control-group {
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
@@ -276,26 +276,26 @@
             width: 100%;
         }
         @media (max-width: 640px) {
-            .control-row {
+            .control-group {
                 flex-direction: column;
                 align-items: stretch;
                 gap: 6px;
             }
         }
 
-        .range-controls {
+        .cups-controls {
             display: flex;
             align-items: center;
             gap: 10px;
             flex: 1;
         }
         @media (max-width: 640px) {
-            .range-controls {
+            .cups-controls {
                 width: 100%;
             }
         }
 
-        .step-btn {
+        .increment-btn {
             width: 42px;
             height: 24px;
             border-radius: 2px;
@@ -311,19 +311,23 @@
             justify-content: center;
             transition: background 0.1s ease;
         }
-        .step-btn:hover {
+        .increment-btn:hover {
             background: #e0e0e0;
             border-color: #666;
         }
+        .increment-btn:focus {
+            outline: 2px solid var(--theme);
+            outline-offset: 2px;
+        }
         @media (max-width: 640px) {
-            .step-btn {
+            .increment-btn {
                 flex: 0 0 48px;
                 height: 32px;
                 font-size: 18px;
             }
         }
 
-        .badge {
+        .quantity-badge {
             font-size: 11px;
             padding: 2px 8px;
             border-radius: 12px;
@@ -333,12 +337,12 @@
             white-space: nowrap;
         }
         @media (max-width: 640px) {
-            .badge {
+            .quantity-badge {
                 font-size: 12px;
                 padding: 4px 10px;
             }
         }
-        .badge.solid {
+        .quantity-badge.solid {
             background: #eef4ff;
             border-color: #9cb5ed;
             font-weight: bold;
@@ -398,6 +402,10 @@
             background: #f0fff0;
             border-color: #81c784;
         }
+        .timer-btn:focus {
+            outline: 2px solid var(--theme);
+            outline-offset: 2px;
+        }
         @media (max-width: 640px) {
             .timer-btn {
                 width: 48px;
@@ -408,7 +416,7 @@
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // === Base recipe (2 cups) ===
+            // Base recipe (2 cups)
             // 500 ml water + fresh ginger slices + 3 heaped tsp chai
             // Bring to boil, simmer 10 min
             // Add 3 tsp sugar + 500 ml cow milk, bring back to boil
@@ -418,7 +426,6 @@
 
             const $ = (sel) => document.querySelector(sel);
 
-            const cupsInput = $("#cups");
             const cupsBadge = $("#cupsBadge");
             const stepButtons = document.querySelectorAll("[data-step]");
             const ingredientsList = $("#ingredients");
@@ -427,14 +434,28 @@
             const sugarTspEl = $(".sugar-tsp");
             const milkMlEl = $(".milk-ml");
 
+            // Store cups value in JavaScript variable instead of hidden input
+            let cupsValue = 2;
+            const CUPS_MIN = 2;
+            const CUPS_MAX = 20;
+
+            // Guard against missing elements
+            if (!cupsBadge || !ingredientsList || !waterMlEl || !chaiTspEl || !sugarTspEl || !milkMlEl) {
+                console.error("Required elements not found");
+                return;
+            }
+
             // Store previous values to detect changes
             let prevValues = { waterMl: 500, chaiTsp: 3, sugarTsp: 3, milkMl: 500 };
+
+            // Flash animation duration (matches CSS animation duration)
+            const FLASH_DURATION_MS = 900;
 
             function flashElement(el) {
                 el.classList.add('flash');
                 setTimeout(() => {
                     el.classList.remove('flash');
-                }, 900);
+                }, FLASH_DURATION_MS);
             }
 
             function formatTime(seconds) {
@@ -468,6 +489,14 @@
                 }
 
                 btnEl.addEventListener("click", () => {
+                    // Handle reset if timer is complete
+                    if (btnEl.classList.contains('complete')) {
+                        btnEl.textContent = "▶";
+                        btnEl.setAttribute("aria-label", "Start timer");
+                        btnEl.className = "timer-btn";
+                        displayEl.textContent = initialDisplay;
+                        return;
+                    }
                     if (timerInterval) {
                         // Stop timer
                         clearInterval(timerInterval);
@@ -484,14 +513,31 @@
                         btnEl.setAttribute("aria-label", "Stop timer");
                         btnEl.className = "timer-btn running";
                         updateTimerDisplay();
-                        timerInterval = setInterval(updateTimerDisplay, 100);
+                        timerInterval = setInterval(updateTimerDisplay, 1000);
                     }
                 });
             }
 
-            createTimer($("#timerDisplay"), $("#timerBtn"), 10, "10:00");
-            createTimer($("#timerDisplay4"), $("#timerBtn4"), 10, "10:00");
-            createTimer($("#timerDisplay5"), $("#timerBtn5"), 5, "5:00");
+            const timerDisplay = $("#timerDisplay");
+            const timerBtn = $("#timerBtn");
+            const timerDisplay4 = $("#timerDisplay4");
+            const timerBtn4 = $("#timerBtn4");
+            const timerDisplay5 = $("#timerDisplay5");
+            const timerBtn5 = $("#timerBtn5");
+
+            if (!timerDisplay || !timerBtn) {
+                throw new Error("Timer elements for step 2 not found: timerDisplay or timerBtn");
+            }
+            if (!timerDisplay4 || !timerBtn4) {
+                throw new Error("Timer elements for step 4 not found: timerDisplay4 or timerBtn4");
+            }
+            if (!timerDisplay5 || !timerBtn5) {
+                throw new Error("Timer elements for step 5 not found: timerDisplay5 or timerBtn5");
+            }
+
+            createTimer(timerDisplay, timerBtn, 10, "10:00");
+            createTimer(timerDisplay4, timerBtn4, 10, "10:00");
+            createTimer(timerDisplay5, timerBtn5, 5, "5:00");
 
             function calc(cups) {
                 // Scale per recipe: base = 2 cups.
@@ -504,8 +550,7 @@
             }
 
             function render() {
-                const cups = Number(cupsInput.value);
-                const r = calc(cups);
+                const r = calc(cupsValue);
                 cupsBadge.textContent = `Cups: ${r.cups}`;
 
                 // Build ingredients list with markers for changed values
@@ -533,7 +578,7 @@
                         span.classList.add('flash');
                         setTimeout(() => {
                             span.classList.remove('flash');
-                        }, 900);
+                        }, FLASH_DURATION_MS);
                     });
                 });
 
@@ -562,10 +607,7 @@
             stepButtons.forEach(btn => {
                 btn.addEventListener("click", () => {
                     const step = Number(btn.dataset.step || 0);
-                    const min = Number(cupsInput.min);
-                    const max = Number(cupsInput.max);
-                    const next = Math.min(max, Math.max(min, Number(cupsInput.value) + step));
-                    cupsInput.value = next;
+                    cupsValue = Math.min(CUPS_MAX, Math.max(CUPS_MIN, cupsValue + step));
                     render();
                 });
             });
@@ -576,41 +618,40 @@
 </head>
 
 <body>
-    <div class="wrap">
+    <div class="page-container">
         <header>
             <h1>Masala Chai with Cow Milk</h1>
             <a href="../" class="nav-link">Go to plant milk version</a>
         </header>
 
         <main>
-            <section class="card">
-                <div class="media">
-                    <div class="caption">
-                        <div class="meta">
+            <section class="recipe-card">
+                <div class="card-header">
+                    <div class="section-title">
+                        <div class="title-text">
                             Choose number of cups to make
                         </div>
                     </div>
                 </div>
-                <div class="controls">
-                    <div class="control-row">
-                        <div class="range-controls">
-                            <button class="step-btn" type="button" data-step="-1" aria-label="Decrease cups">-</button>
-                            <input id="cups" type="hidden" min="2" max="20" step="1" value="2" />
-                            <span class="badge solid" id="cupsBadge" aria-live="polite">Cups: 2</span>
-                            <button class="step-btn" type="button" data-step="1" aria-label="Increase cups">+</button>
+                <div class="control-panel">
+                    <div class="control-group">
+                        <div class="cups-controls" data-cups="2">
+                            <button class="increment-btn" type="button" data-step="-1" aria-label="Decrease cups">-</button>
+                            <span class="quantity-badge solid" id="cupsBadge" aria-live="polite">Cups: 2</span>
+                            <button class="increment-btn" type="button" data-step="1" aria-label="Increase cups">+</button>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section class="card">
+            <section class="recipe-card">
                 <details>
                     <summary>
-                        <div class="caption scaling">
-                            <div class="meta">Scaling rules</div>
+                        <div class="section-title scaling">
+                            <div class="title-text">Scaling rules</div>
                         </div>
                     </summary>
-                    <div class="content">
+                    <div class="card-content">
                         <ul>
                             <li>Base recipe = <b>2 cups</b></li>
                             <li>Each extra cup:
@@ -626,49 +667,49 @@
                 </details>
             </section>
 
-            <section class="card">
-                <div class="media">
-                    <div class="caption ingredients">
-                        <div class="meta">
+            <section class="recipe-card">
+                <div class="card-header">
+                    <div class="section-title ingredients">
+                        <div class="title-text">
                             Ingredients
                         </div>
                     </div>
                 </div>
-                <div class="content">
+                <div class="card-content">
                     <ul id="ingredients"></ul>
                 </div>
             </section>
 
-            <section class="card">
-                <div class="media">
-                    <div class="caption steps">
-                        <div class="meta">
+            <section class="recipe-card">
+                <div class="card-header">
+                    <div class="section-title steps">
+                        <div class="title-text">
                             Steps
                         </div>
                     </div>
                 </div>
-                <div class="content">
-                    <div class="steps" id="steps">
-                        <div class="step">
-                            <div class="step-icon">
-                                <div class="num" aria-hidden="true">1</div>
+                <div class="card-content">
+                    <div class="steps-list" id="steps">
+                        <div class="recipe-step">
+                            <div class="step-number-wrapper">
+                                <div class="step-number" aria-hidden="true">1</div>
                             </div>
                             <div class="step-content">
-                                <ul class="small">
+                                <ul class="step-text">
                                     <li>Add <b class="water-ml">500 ml</b> water to a pot</li>
                                     <li>With <b class="chai-tsp">3</b> heaped tsp masala chai</li>
                                     <li>And fresh ginger slices</li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="step has-timer">
-                            <div class="step-icon">
-                                <div class="num" aria-hidden="true">2</div>
+                        <div class="recipe-step has-timer">
+                            <div class="step-number-wrapper">
+                                <div class="step-number" aria-hidden="true">2</div>
                             </div>
                             <div class="step-content">
-                                <ul class="small">
+                                <ul class="step-text">
                                     <li>Bring to a boil</li>
-                                    <li>Let simmer rigorously for <b>10 min</b></li>
+                                    <li>Simmer vigorously for <b>10 min</b></li>
                                 </ul>
                             </div>
                             <div class="timer-container">
@@ -676,24 +717,24 @@
                                 <button class="timer-btn" id="timerBtn" type="button" aria-label="Start timer">▶</button>
                             </div>
                         </div>
-                        <div class="step">
-                            <div class="step-icon">
-                                <div class="num" aria-hidden="true">3</div>
+                        <div class="recipe-step">
+                            <div class="step-number-wrapper">
+                                <div class="step-number" aria-hidden="true">3</div>
                             </div>
                             <div class="step-content">
-                                <ul class="small">
-                                    <li>Add <b class="sugar-tsp">3</b> tsp granulated white sugar</li>
+                                <ul class="step-text">
+                                    <li>Add <b class="sugar-tsp">3</b> tsp sugar</li>
                                     <li>Add <b class="milk-ml">500 ml</b> cow milk</li>
                                     <li>Bring back to a boil</li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="step has-timer">
-                            <div class="step-icon">
-                                <div class="num" aria-hidden="true">4</div>
+                        <div class="recipe-step has-timer">
+                            <div class="step-number-wrapper">
+                                <div class="step-number" aria-hidden="true">4</div>
                             </div>
                             <div class="step-content">
-                                <ul class="small">
+                                <ul class="step-text">
                                     <li>Simmer for <b>10 min</b> (if 2 cups)</li>
                                     <li>Or until reduced by half (if more than 2 cups)</li>
                                 </ul>
@@ -703,12 +744,12 @@
                                 <button class="timer-btn" id="timerBtn4" type="button" aria-label="Start timer">▶</button>
                             </div>
                         </div>
-                        <div class="step has-timer">
-                            <div class="step-icon">
-                                <div class="num" aria-hidden="true">5</div>
+                        <div class="recipe-step has-timer">
+                            <div class="step-number-wrapper">
+                                <div class="step-number" aria-hidden="true">5</div>
                             </div>
                             <div class="step-content">
-                                <ul class="small">
+                                <ul class="step-text">
                                     <li>Remove from heat</li>
                                     <li>Let sit for <b>5 min</b></li>
                                 </ul>
@@ -718,12 +759,12 @@
                                 <button class="timer-btn" id="timerBtn5" type="button" aria-label="Start timer">▶</button>
                             </div>
                         </div>
-                        <div class="step">
-                            <div class="step-icon">
-                                <div class="num" aria-hidden="true">6</div>
+                        <div class="recipe-step">
+                            <div class="step-number-wrapper">
+                                <div class="step-number" aria-hidden="true">6</div>
                             </div>
                             <div class="step-content">
-                                <ul class="small">
+                                <ul class="step-text">
                                     <li>Strain through mesh</li>
                                     <li>Discard solids</li>
                                     <li>Serve</li>
