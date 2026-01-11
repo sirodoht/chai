@@ -11,6 +11,8 @@
             --border: #c7c7c7;
             --card: #ffffff;
             --max: 540px;
+            --theme: #4caf50;
+            --theme-light: #e8f5e9;
         }
 
         html {
@@ -24,6 +26,17 @@
             background: var(--bg);
             color: var(--text);
             line-height: 1.4;
+            position: relative;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--theme);
+            z-index: 1000;
         }
         @media (max-width: 640px) {
             body {
@@ -42,7 +55,7 @@
             align-items: flex-start;
             justify-content: space-between;
             gap: 10px;
-            margin: 0 0 12px;
+            margin: 8px 0 12px;
             padding: 12px 0 10px;
             background: transparent;
             border-bottom: 1px solid var(--border);
@@ -77,6 +90,9 @@
             margin: 0;
             font-size: 16px;
             font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         @media (max-width: 640px) {
             h1 {
@@ -170,11 +186,17 @@
         }
 
         .flash {
-            animation: flash 0.6s ease;
+            animation: flash 0.9s ease;
         }
         @keyframes flash {
-            0%, 100% { background-color: transparent; }
-            50% { background-color: #fff9c4; }
+            0%, 100% {
+                background-color: transparent;
+                transform: scale(1);
+            }
+            50% {
+                background-color: #fff59d;
+                transform: scale(1.02);
+            }
         }
 
         li {
@@ -409,7 +431,7 @@
                 el.classList.add('flash');
                 setTimeout(() => {
                     el.classList.remove('flash');
-                }, 600);
+                }, 900);
             }
 
             function formatTime(seconds) {
@@ -507,7 +529,7 @@
                         span.classList.add('flash');
                         setTimeout(() => {
                             span.classList.remove('flash');
-                        }, 600);
+                        }, 900);
                     });
                 });
 
