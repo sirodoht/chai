@@ -1,0 +1,48 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/server.key
+          chmod 600 ~/.ssh/server.key
+          cat >> ~/.ssh/config << EOF
+          Host brick
+            HostName 65.21.187.95
+            User root
+            IdentityFile ~/.ssh/server.key
+            StrictHostKeyChecking no
+          EOF
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+
+      - name: Write Caddyfile
+        run: |
+          ssh brick 'cat > /etc/caddy/chai.caddy << EOF
+          chai.01z.io {
+          	root * /var/www/chai
+          	encode zstd gzip
+          	header ?Cache-Control "no-cache"
+          	log {
+          		output stdout
+          		format console
+          	}
+          }
+          EOF'
+
+      - name: Deploy to server
+        run: |
+          rsync -avz --delete \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='LICENSE' \
+            ./ brick:/var/www/chai/
