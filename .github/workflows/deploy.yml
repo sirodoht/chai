@@ -42,6 +42,7 @@ jobs:
       - name: Deploy to server
         run: |
           rsync -avz --delete \
+            --chown=deploy:www-data \
             --exclude='.git' \
             --exclude='.github' \
             --exclude='LICENSE' \
