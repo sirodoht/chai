@@ -30,6 +30,7 @@ jobs:
           ssh brick 'cat > /etc/caddy/chai.caddy << EOF
           chai.01z.io {
           	root * /var/www/chai
+          	file_server
           	encode zstd gzip
           	header ?Cache-Control "no-cache"
           	log {
@@ -47,3 +48,7 @@ jobs:
             --exclude='.github' \
             --exclude='LICENSE' \
             ./ brick:/var/www/chai/
+
+      - name: Reload Caddy
+        run: |
+          ssh brick 'systemctl reload caddy'
