@@ -13,6 +13,10 @@
             --max: 540px;
         }
 
+        html {
+            touch-action: manipulation;
+        }
+
         body {
             margin: 0;
             font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -43,6 +47,11 @@
             background: transparent;
             border-bottom: 1px solid var(--border);
         }
+        @media (max-width: 640px) {
+            header {
+                flex-direction: column;
+            }
+        }
 
         .nav-link {
             font-size: 12px;
@@ -60,7 +69,7 @@
         @media (max-width: 640px) {
             .nav-link {
                 font-size: 11px;
-                padding: 3px 6px;
+                padding: 5px 11px;
             }
         }
 
@@ -399,7 +408,7 @@
                     } else {
                         // Start timer
                         timerEndTime = Date.now() + durationMinutes * 60 * 1000;
-                        btnEl.textContent = "⏸";
+                        btnEl.textContent = "⏹";
                         btnEl.setAttribute("aria-label", "Stop timer");
                         btnEl.className = "timer-btn running";
                         updateTimerDisplay();
@@ -463,7 +472,7 @@
     <div class="wrap">
         <header>
             <h1>Masala Chai with Plant Milk</h1>
-            <a href="cow/" class="nav-link">View cow milk version</a>
+            <a href="cow/" class="nav-link">Go to cow milk version</a>
         </header>
 
         <main>
