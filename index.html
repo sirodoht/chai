@@ -99,6 +99,38 @@
             overflow: hidden;
         }
 
+        details {
+            border: none;
+        }
+        details summary {
+            cursor: pointer;
+            user-select: none;
+            list-style: none;
+            padding: 0;
+        }
+        details summary::-webkit-details-marker {
+            display: none;
+        }
+        details summary::marker {
+            display: none;
+        }
+        details summary .caption {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 8px;
+            background: #fff0f0;
+        }
+        details summary .caption::before {
+            content: "▶";
+            font-size: 10px;
+            opacity: 0.6;
+            flex-shrink: 0;
+        }
+        details[open] summary .caption::before {
+            transform: rotate(90deg);
+        }
+
         .media {
             position: relative;
             background: #fff;
@@ -135,6 +167,14 @@
         ul {
             margin: 0;
             padding-left: 18px;
+        }
+
+        .flash {
+            animation: flash 0.6s ease;
+        }
+        @keyframes flash {
+            0%, 100% { background-color: transparent; }
+            50% { background-color: #fff9c4; }
         }
 
         li {
@@ -361,6 +401,17 @@
             const chaiTspEl = $(".chai-tsp");
             const sugarTspEl = $(".sugar-tsp");
             const milkMlEl = $(".milk-ml");
+
+            // Store previous values to detect changes
+            let prevValues = { waterMl: 500, chaiTsp: 3, sugarTsp: 3, milkMl: 250 };
+
+            function flashElement(el) {
+                el.classList.add('flash');
+                setTimeout(() => {
+                    el.classList.remove('flash');
+                }, 600);
+            }
+
             function formatTime(seconds) {
                 const mins = Math.floor(seconds / 60);
                 const secs = seconds % 60;
@@ -431,21 +482,55 @@
                 const r = calc(cups);
                 cupsBadge.textContent = `Cups: ${r.cups}`;
 
+                // Build ingredients list with markers for changed values
+                const wrapIfChanged = (value, prevValue, unit = '') => {
+                    const changed = value !== prevValue;
+                    const display = unit ? `${value} ${unit}` : value;
+                    return changed ? `<span data-flash="true">${display}</span>` : display;
+                };
+
                 const ing = [
-                    `<b>${r.waterMl} ml</b> water`,
-                    `<b>${r.milkMl} ml</b> plant milk`,
-                    `<b>${r.chaiTsp}</b> heaped tsp masala chai`,
-                    `<b>${r.sugarTsp}</b> tsp granulated white sugar`,
+                    `<b>${wrapIfChanged(r.waterMl, prevValues.waterMl, 'ml')}</b> water`,
+                    `<b>${wrapIfChanged(r.milkMl, prevValues.milkMl, 'ml')}</b> plant milk`,
+                    `<b>${wrapIfChanged(r.chaiTsp, prevValues.chaiTsp)}</b> heaped tsp masala chai`,
+                    `<b>${wrapIfChanged(r.sugarTsp, prevValues.sugarTsp)}</b> tsp granulated white sugar`,
                     `Fresh ginger slices (to taste)`,
                 ];
 
                 ingredientsList.innerHTML = ing.map(x => `<li>${x}</li>`).join("");
 
-                // Update dynamic values in steps
-                waterMlEl.textContent = `${r.waterMl} ml`;
-                chaiTspEl.textContent = r.chaiTsp;
-                sugarTspEl.textContent = r.sugarTsp;
-                milkMlEl.textContent = `${r.milkMl} ml`;
+                // Trigger flash animation for changed values in ingredients list
+                requestAnimationFrame(() => {
+                    const flashSpans = ingredientsList.querySelectorAll('[data-flash="true"]');
+                    flashSpans.forEach(span => {
+                        span.removeAttribute('data-flash');
+                        span.classList.add('flash');
+                        setTimeout(() => {
+                            span.classList.remove('flash');
+                        }, 600);
+                    });
+                });
+
+                // Update dynamic values in steps and flash if changed
+                if (waterMlEl.textContent !== `${r.waterMl} ml`) {
+                    waterMlEl.textContent = `${r.waterMl} ml`;
+                    flashElement(waterMlEl);
+                }
+                if (chaiTspEl.textContent !== String(r.chaiTsp)) {
+                    chaiTspEl.textContent = r.chaiTsp;
+                    flashElement(chaiTspEl);
+                }
+                if (sugarTspEl.textContent !== String(r.sugarTsp)) {
+                    sugarTspEl.textContent = r.sugarTsp;
+                    flashElement(sugarTspEl);
+                }
+                if (milkMlEl.textContent !== `${r.milkMl} ml`) {
+                    milkMlEl.textContent = `${r.milkMl} ml`;
+                    flashElement(milkMlEl);
+                }
+
+                // Update previous values
+                prevValues = { waterMl: r.waterMl, chaiTsp: r.chaiTsp, sugarTsp: r.sugarTsp, milkMl: r.milkMl };
             }
 
             stepButtons.forEach(btn => {
@@ -493,6 +578,29 @@
             </section>
 
             <section class="card">
+                <details>
+                    <summary>
+                        <div class="caption scaling">
+                            <div class="meta">Scaling rules</div>
+                        </div>
+                    </summary>
+                    <div class="content">
+                        <ul>
+                            <li>Base recipe = <b>2 cups</b></li>
+                            <li>Each extra cup:
+                                <ul>
+                                    <li><b>200 ml water</b></li>
+                                    <li><b>1 tsp chai</b></li>
+                                    <li><b>1 tsp sugar</b></li>
+                                    <li><b>100 ml plant milk</b></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </details>
+            </section>
+
+            <section class="card">
                 <div class="media">
                     <div class="caption ingredients">
                         <div class="meta">
@@ -502,29 +610,6 @@
                 </div>
                 <div class="content">
                     <ul id="ingredients"></ul>
-                </div>
-            </section>
-
-            <section class="card">
-                <div class="media">
-                    <div class="caption scaling">
-                        <div class="meta">
-                            Scaling rules
-                        </div>
-                    </div>
-                </div>
-                <div class="content">
-                    <ul>
-                        <li>Base recipe = <b>2 cups</b></li>
-                        <li>Each extra cup:
-                            <ul>
-                                <li><b>200 ml water</b></li>
-                                <li><b>1 tsp chai</b></li>
-                                <li><b>1 tsp sugar</b></li>
-                                <li><b>100 ml plant milk</b></li>
-                            </ul>
-                        </li>
-                    </ul>
                 </div>
             </section>
 
